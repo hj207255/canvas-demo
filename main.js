@@ -35,41 +35,80 @@ brushObj.onclick=function(){
     actObj.className="action"
 };
 
+/************************************************************************/
+//增加手机端触摸事件
+//先判断是否为触屏设备
+if(document.body.ontouchstart===null){//或者不等于undefined
+    //触摸开始事件
+    canvas.ontouchstart=function (aaa) {
+        var x=aaa.touches[0].clientX;
+        var y=aaa.touches[0].clientY;
+        using=true;
+        if(eraserOn){
+            hua.clearRect(x-5,y-5,10,10);//这个是给“hua”加的动作，并且不带px单位
+        }else{
+            star={x:x,y:y};
+            dian(x,y);
+        }
+    };
+    //触摸移动事件
+    canvas.ontouchmove=function (aaa) {
+        if(using){
+            var x=aaa.touches[0].clientX;
+            var y=aaa.touches[0].clientY;
+            var newStar={x:x,y:y};
+            if (eraserOn){
+                hua.clearRect(x-5,y-5,10,10);
+            }else{
+                line(star.x,star.y,newStar.x,newStar.y);
+                dian(x,y);
+                star=newStar;//将新点覆盖旧点
+            }
+        }
+    };
+    //触摸结束事件
+    canvas.ontouchend=function(aaa){
+        using=false;
+    };
 
-
-//鼠标点击事件
-canvas.onmousedown=function(aaa){
-    var x=aaa.clientX;
-    var y=aaa.clientY;
-    using=true;
-    if(eraserOn){
-        hua.clearRect(x-5,y-5,10,10);//这个是给“hua”加的动作，并且不带px单位
-    }else{
-        star={x:x,y:y};
-        dian(x,y);
-    }
-};
-
-//鼠标移动事件
-canvas.onmousemove=function(aaa){
-    if(using){
+}else{
+    //鼠标点击事件
+    canvas.onmousedown=function(aaa){
         var x=aaa.clientX;
         var y=aaa.clientY;
-        var newStar={x:x,y:y};
-        if (eraserOn){
-            hua.clearRect(x-5,y-5,10,10);
+        using=true;
+        if(eraserOn){
+            hua.clearRect(x-5,y-5,10,10);//这个是给“hua”加的动作，并且不带px单位
         }else{
-            line(star.x,star.y,newStar.x,newStar.y);
+            star={x:x,y:y};
             dian(x,y);
-            star=newStar;//将新点覆盖旧点
         }
-    }
-};
+    };
 
-//鼠标松开事件
-canvas.onmouseup=function(aaa){
-    using=false;
-};
+    //鼠标移动事件
+    canvas.onmousemove=function(aaa){
+        if(using){
+            var x=aaa.clientX;
+            var y=aaa.clientY;
+            var newStar={x:x,y:y};
+            if (eraserOn){
+                hua.clearRect(x-5,y-5,10,10);
+            }else{
+                line(star.x,star.y,newStar.x,newStar.y);
+                dian(x,y);
+                star=newStar;//将新点覆盖旧点
+            }
+        }
+    };
+
+    //鼠标松开事件
+    canvas.onmouseup=function(aaa){
+        using=false;
+    };
+
+}
+
+
 
 /***************************************************************/
 //点的函数

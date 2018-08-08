@@ -1,0 +1,23 @@
+
+body{
+    margin: 0;
+    padding: 0;
+}
+#act{
+    position: fixed;
+    bottom: 50px;
+    left: 20px;
+}
+#canvas{
+    vertical-align: top; /*更改canvas的对齐样式*/
+}
+.action>#brush{
+    display: none;
+}
+
+.action.x>#brush{
+    display: inline-block;
+}
+.action.x>#eraser{
+    display: none;
+}

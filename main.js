@@ -47,19 +47,19 @@ brushObj.onclick=function(){
 
 //给画笔添加粗细功能
 var lw=5;
-var r=lw/2;
+var r=2;
 var lineObj=document.getElementById("line");
 var thinObj=document.getElementById("thin");
 var thickObj=document.getElementById("thick");
 thinObj.onclick=function () {
     lineObj.className="thickness";
     lw=5;
-    r=lw/2;
+    r=2;
 };
 thickObj.onclick=function () {
     lineObj.className="thickness z";
     lw=9;
-    r=lw/2;
+    r=4;
 };
 
 /************************************************************************/

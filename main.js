@@ -1,4 +1,7 @@
 
+
+
+
 //获取画板，定义画板绘图模式
 var canvas=document.getElementById("canvas");
 var hua=canvas.getContext("2d");
@@ -28,11 +31,81 @@ var brushObj=document.getElementById("brush");
 var actObj=document.getElementById("act");
 eraserObj.onclick=function(){
     eraserOn = true;
-    actObj.className="action x"
+    actObj.className="action x";
+    colObj.className="color yc";
 };
 brushObj.onclick=function(){
     eraserOn = false;
-    actObj.className="action"
+    actObj.className="action";
+    colObj.className="color";
+    hua.fillStyle="#000";
+    hua.strokeStyle="#000";
+    colObj.className="color";
+};
+
+/************************************************************************/
+
+//给画笔添加粗细功能
+var lw=5;
+var r=lw/2;
+var lineObj=document.getElementById("line");
+var thinObj=document.getElementById("thin");
+var thickObj=document.getElementById("thick");
+thinObj.onclick=function () {
+    lineObj.className="thickness";
+    lw=5;
+    r=lw/2;
+};
+thickObj.onclick=function () {
+    lineObj.className="thickness z";
+    lw=9;
+    r=lw/2;
+};
+
+/************************************************************************/
+
+//点击清屏事件
+var delObj=document.getElementById("del");
+delObj.onclick=function(){
+  hua.clearRect(0,0,canvas.width,canvas.height);
+};
+
+/************************************************************************/
+
+//点击保存
+var saveObj=document.getElementById("save");
+saveObj.onclick=function () {
+  var hf=canvas.toDataURL("image/png");
+  //使用a标签的下载功能
+    var a=document.createElement("a");
+    document.body.appendChild(a);
+    a.href=hf;
+    a.download="我的作画";
+    a.target="_blank";
+    a.click();
+};
+
+/************************************************************************/
+
+//给画笔添加颜色点击事件
+var colObj=document.getElementById("color");
+var rObj=document.getElementById("red");
+var gObj=document.getElementById("green");
+var bObj=document.getElementById("blue");
+rObj.onclick=function () {
+  colObj.className="color r";
+    hua.fillStyle="red";
+    hua.strokeStyle="red";
+};
+gObj.onclick=function () {
+    colObj.className="color g";
+    hua.fillStyle="green";
+    hua.strokeStyle="green";
+};
+bObj.onclick=function () {
+    colObj.className="color b";
+    hua.fillStyle="blue";
+    hua.strokeStyle="blue";
 };
 
 /************************************************************************/
@@ -45,10 +118,10 @@ if(document.body.ontouchstart===null){//或者不等于undefined
         var y=aaa.touches[0].clientY;
         using=true;
         if(eraserOn){
-            hua.clearRect(x-5,y-5,10,10);//这个是给“hua”加的动作，并且不带px单位
+            hua.clearRect(x-5,y-5,30,30);//这个是给“hua”加的动作，并且不带px单位
         }else{
             star={x:x,y:y};
-            dian(x,y);
+            dian(x,y,r);
         }
     };
     //触摸移动事件
@@ -58,10 +131,10 @@ if(document.body.ontouchstart===null){//或者不等于undefined
             var y=aaa.touches[0].clientY;
             var newStar={x:x,y:y};
             if (eraserOn){
-                hua.clearRect(x-5,y-5,10,10);
+                hua.clearRect(x-5,y-5,30,30);
             }else{
                 line(star.x,star.y,newStar.x,newStar.y);
-                dian(x,y);
+                dian(x,y,r);
                 star=newStar;//将新点覆盖旧点
             }
         }
@@ -70,7 +143,6 @@ if(document.body.ontouchstart===null){//或者不等于undefined
     canvas.ontouchend=function(aaa){
         using=false;
     };
-
 }else{
     //鼠标点击事件
     canvas.onmousedown=function(aaa){
@@ -78,13 +150,12 @@ if(document.body.ontouchstart===null){//或者不等于undefined
         var y=aaa.clientY;
         using=true;
         if(eraserOn){
-            hua.clearRect(x-5,y-5,10,10);//这个是给“hua”加的动作，并且不带px单位
+            hua.clearRect(x-5,y-5,30,30);//这个是给“hua”加的动作，并且不带px单位
         }else{
             star={x:x,y:y};
-            dian(x,y);
+            dian(x,y,r);
         }
     };
-
     //鼠标移动事件
     canvas.onmousemove=function(aaa){
         if(using){
@@ -92,15 +163,14 @@ if(document.body.ontouchstart===null){//或者不等于undefined
             var y=aaa.clientY;
             var newStar={x:x,y:y};
             if (eraserOn){
-                hua.clearRect(x-5,y-5,10,10);
+                hua.clearRect(x-5,y-5,30,30);
             }else{
                 line(star.x,star.y,newStar.x,newStar.y);
-                dian(x,y);
+                dian(x,y,r);
                 star=newStar;//将新点覆盖旧点
             }
         }
     };
-
     //鼠标松开事件
     canvas.onmouseup=function(aaa){
         using=false;
@@ -112,18 +182,16 @@ if(document.body.ontouchstart===null){//或者不等于undefined
 
 /***************************************************************/
 //点的函数
-function dian(x,y){
+function dian(x,y,r){
     hua.beginPath();
-    hua.fillStyle="#000";
-    hua.arc(x,y,1,0,Math.PI*2);
+    hua.arc(x,y,r,0,Math.PI*2);
     hua.fill();
 }
 //线的函数
 function line(x1,y1,x2,y2){
     hua.beginPath();
-    hua.strokeStyle="#000";
     hua.moveTo(x1,y1);
-    hua.lineWidth=4;
+    hua.lineWidth=lw;
     hua.lineTo(x2,y2);
     hua.stroke();//先必须用stroke，不能用fill
     hua.closePath();

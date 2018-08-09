@@ -10,11 +10,36 @@
 <body>
     <canvas id="canvas"></canvas>
     <div id="act" class="action">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush">画笔</button>
+        <svg class="icon" aria-hidden="true" id="brush">
+            <use xlink:href="#icon-pen1"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" id="eraser">
+            <use xlink:href="#icon-eraser1"></use>
+        </svg>
     </div>
+    <ul class="color" id="color">
+        <li id="red"></li>
+        <li id="green"></li>
+        <li id="blue"></li>
+    </ul>
+    <div class="del">
+        <svg class="icon" aria-hidden="true" id="del">
+            <use xlink:href="#icon-clearthecache"></use>
+        </svg>
+    </div>
+    <div class="save">
+        <svg class="icon" aria-hidden="true" id="save">
+            <use xlink:href="#icon-Save"></use>
+        </svg>
+    </div>
+    <ol class="thickness" id="line">
+        <li id="thin"><span></span></li>
+        <li id="thick"><span></span></li>
+    </ol>
+
 
 
     <script src="main.js"></script>
+    <script src="//at.alicdn.com/t/font_784139_8l2je5sbnx.js"></script>
 </body>
 </html>

@@ -1,23 +1,132 @@
 
+
 body{
     margin: 0;
     padding: 0;
 }
+li{
+    list-style: none;
+}
 #act{
     position: fixed;
-    bottom: 50px;
-    left: 20px;
+    top: 50px;
+    left: 30px;
 }
 #canvas{
     vertical-align: top; /*更改canvas的对齐样式*/
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
-.action>#brush{
-    display: none;
+.icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    margin: 0 10px;
+    transition: all 0.3s;
 }
-
+.action>#brush{ /*初始状态笔是红色的*/
+    color: red;
+}
+/*当笔和橡皮擦哪一个被点击时，给他们俩的父亲使用x类名，下边是当服气使用x类名时笔和橡皮的不同状态*/
 .action.x>#brush{
-    display: inline-block;
+    color: #000;
 }
 .action.x>#eraser{
-    display: none;
+    color: red;
 }
+.color{
+    position: fixed;
+    top: 80px;
+    left: 3px;
+}
+.color li{
+    height: 25px;
+    width: 25px;
+    margin: 20px 0;
+    border-radius: 50%;
+    transition: all linear 0.3s;
+    box-sizing: border-box;
+}
+
+#red{
+    background-color: red;
+}
+#green{
+    background-color: green;
+}
+#blue{
+    background-color: blue;
+}
+.color.r>#red{
+    transform: scale(1.2);
+    border: 2px solid #aaa;
+}
+.color.g>#green{
+    transform: scale(1.2);
+    border: 2px solid #aaa;
+}
+.color.b>#blue{
+    transform: scale(1.2);
+    border: 2px solid #aaa;
+}
+.color>li{
+    max-height: 155px;
+    opacity: 1;
+}
+.color.yc>li{
+    max-height: 0;
+    opacity: 0;
+}
+.del{
+    position: fixed;
+    top: 50px;
+    right: 30px;
+}
+.save{
+    position: fixed;
+    top: 100px;
+    right: 30px;
+}
+.thickness{
+    position: fixed;
+    top: 32px;
+    left: 160px;
+    margin: 0;
+    padding: 0;
+}
+.thickness>li{
+    margin: 20px 0;
+    box-sizing: border-box;
+    height: 28px;
+}
+#thin>span{
+    display: inline-block;
+    height: 4px;
+    width: 60px;
+    border-radius: 5px;
+    background-color: #000;
+    line-height: 40px;
+}
+#thick>span{
+    display: inline-block;
+    height: 8px;
+    width: 60px;
+    background-color: #000;
+    border-radius: 10px;
+    line-height: 40px;
+}
+.thickness>#thin{
+    background-color: #ccc;
+}
+.thickness.z>#thin{
+    background-color: transparent;
+}
+.thickness.z>#thick{
+    background-color: #ccc;
+}
+
